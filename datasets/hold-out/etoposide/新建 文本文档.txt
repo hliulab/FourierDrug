@@ -1,2 +1,0 @@
-x_luad, x_brca, x_skcm, x_sclc, x_hnsc, x_coread, x_gbm, x_dlbc, x_esca, x_laml, x_paad,x_nb,x_kirc,x_meso,x_stda,x_blca,x_target,（x1-x18)
-x_7存在重大问题，auc=0
