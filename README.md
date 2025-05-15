@@ -1,5 +1,5 @@
 # Cross-domain pan-cancer drug response prediction by latent independent projection for asymmetric constrained domain generalization
-![image](https://github.com/user-attachments/assets/9e5f99f0-2eeb-4e12-bcb9-cb36c3801908)
+![image]([https://github.com/user-attachments/assets/9e5f99f0-2eeb-4e12-bcb9-cb36c3801908](https://github.com/hliulab/panCancerDR/blob/main/framework.png))
 panCancerDR is a novel domain generalization framework designed to predict drug response in out-of-distribution samples, including individual cells and patient data, using only in vitro cancer cell line data for training. By leveraging adversarial domain generalization and innovative feature extraction techniques, panCancerDR addresses the limitations of traditional domain adaptation methods, which are unsuitable for unseen target domains.
 
 
