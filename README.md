@@ -30,23 +30,77 @@ git clone https://anonymous.4open.science/r/panCancerDR-FC03.git
 - **source/**: Includes the source code for the model. Each drug has a dedicated Python script for training, testing, and evaluation, named after the drug (e.g., `drugA.py`, `drugB.py`).  
 - **trained_model/**: Stores pre-trained models, with each model saved in a subdirectory named after the corresponding drug.  
 
-## Model Training  
-To train the model on your dataset, use the appropriate script based on the data type:  
+## Cell Line Experiment Instructions
 
-- For single-cell data:  
-  ```bash  
-  python single_cell_drugX.py  
-  ```  
+To train the model on cell line experiments, follow these steps:  
 
-- For patient data (TCGA):  
-  ```bash  
-  python TCGA_drugX.py  
-  ```  
+1. **Download the code files**  
+   - `cell_line.py`  
+   - `model_test0.py`  
 
-Replace `drugX` with the name of the specific drug you want to train the model on (e.g., `drugA`, `drugB`).
+2. **Prepare the dataset**  
+   Download the corresponding cell line dataset into the `datasets/hold-out` folder.  
 
+3. **Configure the parameters**  
+   - Set `source_path` to the path of the cell line dataset.  
+   - Set `test_label` to the cancer type ID (usually a number from `0` to `22`).  
 
----
+4. **Run the experiment**  
+   Execute the script to perform Leave-One-Out Cross Validation (LOOCV).
+## Single-Cell Experiment Instructions
+
+To train the model on single-cell experiments, follow these steps:  
+
+1. **Download the code files**  
+   - `Single-cell.py`  
+   - `model_test0.py`  
+
+2. **Prepare the dataset**  
+   Download both the cell line and single-cell datasets from the `datasets/single-cell` folder.  
+
+3. **Configure the parameters**  
+   - In `Single-cell.py`, set `drug_name` to the drug you want to validate.  
+   - Set `source_dir` to the path of the corresponding **cell line dataset**.  
+   - Set `target_dir` to the path of the corresponding **single-cell dataset**.  
+
+4. **Run the experiment**  
+   Execute the script to perform single-cell validation.
+## Patient Experiment Instructions
+
+To train the model on patient data experiments, follow these steps:  
+
+1. **Download the code files**  
+   - `TCGA.py`  
+   - `model_test0.py`  
+
+2. **Prepare the dataset**  
+   Download both the cell line and patient datasets from the `datasets/patient` folder.  
+
+3. **Configure the parameters**  
+   - In `TCGA.py`, set `drug_name` to the drug you want to validate.  
+   - Set `source_dir` to the path of the corresponding **cell line dataset**.  
+   - Set `target_dir` to the path of the corresponding **patient dataset**.  
+
+4. **Run the experiment**  
+   Execute the script to perform patient data validation.
+## Time-Series Experiment Instructions
+
+To run time-series experiment validation, follow these steps:  
+
+1. **Download the code files**  
+   - `timeseq.py`  
+   - `model_test0.py`  
+
+2. **Prepare the dataset**  
+   Download the required data from the `datasets/dynamic` folder.  
+
+3. **Configure the parameters**  
+   - In `timeseq.py`, set `drug_name` to `'Bortezomib'`.  
+   - Set `source_dir` to the file path of **`Bortezomib_source1.csv`**.  
+   - Set `target_dir` to the file path of **`Bortezomib_target.csv`**.  
+
+4. **Run the experiment**  
+   Execute the script to perform time-series experiment validation.
 
 
 
