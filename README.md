@@ -25,11 +25,6 @@ git clone https://anonymous.4open.science/r/panCancerDR-FC03.git
 
 ## Instructions for Use
 
-### Directory Structure
-- **data/**: Contains the datasets for different drugs, each compressed into a separate `.zip` file named after the corresponding drug.  
-- **source/**: Includes the source code for the model. Each drug has a dedicated Python script for training, testing, and evaluation, named after the drug (e.g., `drugA.py`, `drugB.py`).  
-- **trained_model/**: Stores pre-trained models, with each model saved in a subdirectory named after the corresponding drug.  
-
 ## Cell Line Experiment Instructions
 
 To train the model on cell line experiments, follow these steps:  
