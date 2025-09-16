@@ -7,11 +7,24 @@ from sklearn.metrics import roc_auc_score
 from model_test0 import *
 import matplotlib.pyplot as plt
 import os
+import argparse
+
+parser = argparse.ArgumentParser()
+parser.add_argument('--drug_name', type=str, default='5-Fluorouracil',
+                    help="Drug name, e.g., Temozolomide, Paclitaxel, Gemcitabine, Docetaxel")
+parser.add_argument('--source_dir', type=str, default='../datasets/patient/5-Fluorouracil_cell_lines.csv',
+                    help="Path to source CSV file")
+parser.add_argument('--target_dir', type=str, default='../datasets/patient/5-fluorouracil_patients.csv',
+                    help="Path to target CSV file")
+
+args = parser.parse_args()
+
+drug_name = args.drug_name
+source_dir = args.source_dir
+target_dir = args.target_dir
 
 
-drug_name = '5-Fluorouracil'  # Change drug name here: Temozolomide, Paclitaxel, Gemcitabine, Docetaxel
-source_dir = '/data/sr/New_Folder/5-Fluorouracil_matched_data.csv'
-target_dir = '/data/sr/New_Folder/5 fluorouracil_patients.csv'
+
 save_feature_path = f'/data/sr/New_Folder/{drug_name}_final_features.npy'
 
 
@@ -34,9 +47,13 @@ def load_and_preprocess_data(drug_name, source_dir, target_dir):
     CLASS_NUM = len(labels)  # Number of unique labels
     # Extract source data
     x_source, r_source, l_source = [], [], []
+    # 找到 label 列的索引位置
+    label_idx1 = source_data.columns.get_loc('label')
+    label_idx2 = target_data.columns.get_loc('label')
+    # 从 label 列之后的第一列到最后一列
     for label in labels:
-        temp_x = source_data[source_data['label'] == label].iloc[:, 5:10005].values
-        temp_r = source_data[source_data['label'] == label].iloc[:, 2].values
+        temp_x = source_data[source_data['label'] == label].iloc[:, label_idx1+1:].values
+        temp_r = source_data[source_data['label'] == label]['response'].values
         x_source.append(temp_x)
         r_source.append(temp_r)
         one_hot = np.zeros((temp_x.shape[0], CLASS_NUM))
@@ -45,8 +62,9 @@ def load_and_preprocess_data(drug_name, source_dir, target_dir):
 
     # Extract target data
     last_label = labels[-1]
-    x_target = target_data[target_data['label'] == last_label].iloc[:, 4:10004].values
-    r_target = target_data[target_data['label'] == last_label].iloc[:, 1].values
+
+    x_target = target_data[target_data['label'] == last_label].iloc[:, label_idx2 + 1:-4].values
+    r_target = target_data[target_data['label'] == last_label]['response'].values
     one_hot_target = np.zeros((x_target.shape[0], CLASS_NUM))
     one_hot_target[:, last_label - 1] = 1
 

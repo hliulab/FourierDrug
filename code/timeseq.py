@@ -8,9 +8,22 @@ from model_test0 import *
 import matplotlib.pyplot as plt
 import os
 
-drug_name = 'Bortezomib'  # Change drug name here: AR-42, Gefitinib, Sorafenib, Vorinostat, Docetaxel, Etoposide, PLX4720,
-source_dir = '/data/sr/New_Folder/Bortezomib_source1.csv'
-target_dir = '/data/sr/New_Folder/Bortezomib_target.csv'
+import argparse
+
+parser = argparse.ArgumentParser()
+parser.add_argument('--drug_name', type=str, default='Bortezomib',
+                    help="Drug name, e.g., AR-42, Gefitinib, Sorafenib, Vorinostat, Docetaxel, Etoposide, PLX4720")
+parser.add_argument('--source_dir', type=str, default='../datasets/dynamic/Bortezomib_source1.csv',
+                    help="Path to source CSV file")
+parser.add_argument('--target_dir', type=str, default='../datasets/dynamic/Bortezomib_target.csv',
+                    help="Path to target CSV file")
+
+args = parser.parse_args()
+
+drug_name = args.drug_name
+source_dir = args.source_dir
+target_dir = args.target_dir
+
 save_feature_path = f'/data/sr/New_Folder/{drug_name}_final_features.npy'
 
 

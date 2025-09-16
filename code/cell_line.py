@@ -7,9 +7,25 @@ from sklearn.metrics import roc_auc_score
 from model_test0 import *
 import matplotlib.pyplot as plt
 import os
+import argparse
 
-source_path = '/data/sr/New_Folder/cell_Afatinib.csv' #cell_AR_42, cell_Docetaxel, cell_etoposide, cell_PLX4720
-test_label = 3  # Choose label 3 as test set
+parser = argparse.ArgumentParser()
+
+
+
+# 新增参数
+parser.add_argument('--source_path', type=str, default='/data/sr/New_Folder/cell_Afatinib.csv',
+                    help='Path to the source cell line dataset')
+parser.add_argument('--test_label', type=int, default=3,
+                    help='Label index to use as test set (e.g., 0-22)')
+
+args = parser.parse_args()
+
+# 在代码里这样用
+source_path = args.source_path
+test_label = args.test_label
+
+
 
 # ====================== Hyperparameter Configuration ===========================
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
@@ -40,7 +56,7 @@ def load_and_preprocess_data(source_path, test_label):
     # Iterate over each label to collect data
     for label in labels:
         x_data = source_data[source_data['label'] == label].iloc[:, 6:].values
-        r_data = source_data[source_data['label'] == label].iloc[:, 4].values
+        r_data = source_data[source_data['label'] == label]['response'].values
         one_hot_label = np.zeros((x_data.shape[0], CLASS_NUM))
         one_hot_label[:, label - 1] = 1  # One-hot encode the label
         all_x[label] = x_data

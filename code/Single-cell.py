@@ -7,17 +7,35 @@ from sklearn.metrics import roc_auc_score
 from model_test0 import *
 import matplotlib.pyplot as plt
 import os
+import argparse
 
-drug_name = 'Afatinib'  # Change drug name here: AR-42, Gefitinib, Sorafenib, Vorinostat, Docetaxel, Etoposide, PLX4720,
-source_dir = '/data/sr/New_Folder/Afatinib.csv'
-target_dir = '/data/sr/New_Folder/Target_expr_resp_z.Afatinib_tp4k.csv'
-save_feature_path = f'/data/sr/New_Folder/{drug_name}_final_features.npy'
+parser = argparse.ArgumentParser()
+
+
+
+
+# 新增 drug_name / source_dir / target_dir
+parser.add_argument('--drug_name', type=str, default='Afatinib',
+                    help='Drug name to validate (e.g., AR-42, Gefitinib, Sorafenib, etc.)')
+parser.add_argument('--source_dir', type=str, default='../datasets/single cell/Afatinib.csv',
+                    help='Path to the cell line dataset for the specified drug')
+parser.add_argument('--target_dir', type=str, default='../datasets/single cell/Target_expr_resp_z.Afatinib_tp4k.csv',
+                    help='Path to the target expression dataset for the specified drug')
+
+args = parser.parse_args()
+
+# 在代码里使用
+
+drug_name = args.drug_name
+source_dir = args.source_dir
+target_dir = args.target_dir
+
 
 
 # ====================== Hyperparameter Configuration ===========================
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 BATCH_SIZE = 120
-EPOCHS = 100
+EPOCHS = 10
 LEARNING_RATE = 8e-5
 WEIGHT_DECAY = 1e-5
 
@@ -32,8 +50,10 @@ def load_and_preprocess_data(drug_name, source_dir, target_dir):
     CLASS_NUM = len(labels)  # Number of unique labels
     # Extract source data
     x_source, r_source, l_source = [], [], []
+    label_idx1 = source_data.columns.get_loc('label')
+    label_idx2 = target_data.columns.get_loc('label')
     for label in labels:
-        temp_x = source_data[source_data['label'] == label].iloc[:, 5:].values
+        temp_x = source_data[source_data['label'] == label].iloc[:, label_idx1+1:].values
         temp_r = source_data[source_data['label'] == label].iloc[:, 1].values
         x_source.append(temp_x)
         r_source.append(temp_r)
@@ -43,7 +63,7 @@ def load_and_preprocess_data(drug_name, source_dir, target_dir):
 
     # Extract target data
     last_label = labels[-1]
-    x_target = target_data[target_data['label'] == last_label].iloc[:, 3:].values
+    x_target = target_data[target_data['label'] == last_label].iloc[:, label_idx2+1:].values
     r_target = target_data[target_data['label'] == last_label].iloc[:, 1].values
     one_hot_target = np.zeros((x_target.shape[0], CLASS_NUM))
     one_hot_target[:, last_label - 1] = 1
