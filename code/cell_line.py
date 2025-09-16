@@ -4,14 +4,13 @@ import torch
 import torch.nn as nn
 from torch.utils.data import DataLoader, TensorDataset
 from sklearn.metrics import roc_auc_score
-from model_test import * 
+from model_test0 import *
 import matplotlib.pyplot as plt
 import os
 
-source_path = '/data/sr/updated_output1.csv' #updated_output2, updated_output3, updated_output4, updated_output5
+source_path = '/data/sr/New_Folder/cell_Afatinib.csv' #cell_AR_42, cell_Docetaxel, cell_etoposide, cell_PLX4720
 test_label = 3  # Choose label 3 as test set
 
-train_loader, test_loader, input_dim = load_and_preprocess_data(source_path, test_label)
 # ====================== Hyperparameter Configuration ===========================
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 BATCH_SIZE = 32
@@ -40,8 +39,8 @@ def load_and_preprocess_data(source_path, test_label):
 
     # Iterate over each label to collect data
     for label in labels:
-        x_data = source_data[source_data['label'] == label].iloc[:, 5:].values
-        r_data = source_data[source_data['label'] == label].iloc[:, 1].values
+        x_data = source_data[source_data['label'] == label].iloc[:, 6:].values
+        r_data = source_data[source_data['label'] == label].iloc[:, 4].values
         one_hot_label = np.zeros((x_data.shape[0], CLASS_NUM))
         one_hot_label[:, label - 1] = 1  # One-hot encode the label
         all_x[label] = x_data
@@ -157,4 +156,4 @@ def train_model(source_loader, target_loader, input_dim, CLASS_NUM):
 
     return train_losses, test_aucs, torch.cat(total_feature, dim=0).numpy()
 train_loader, test_loader, input_dim, CLASS_NUM = load_and_preprocess_data(source_path, test_label)
-train_losses, test_aucs, features = train_model(source_loader, target_loader, input_dim, CLASS_NUM)
+train_losses, test_aucs, features = train_model(train_loader, test_loader, input_dim, CLASS_NUM)

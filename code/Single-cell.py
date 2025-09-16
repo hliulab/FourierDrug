@@ -4,16 +4,15 @@ import torch
 import torch.nn as nn
 from torch.utils.data import DataLoader, TensorDataset
 from sklearn.metrics import roc_auc_score
-from model_test import * 
+from model_test0 import *
 import matplotlib.pyplot as plt
 import os
-# ====================== Execution Example ===========================
-if __name__ == "__main__":
-    drug_name = 'Cetuximab'  # Change drug name here: AR-42, Gefitinib, Sorafenib, Vorinostat, Docetaxel, Etoposide, PLX4720, 
-    source_dir = '/data/sr'
-    target_dir = '/data/sr'
-    save_feature_path = f'/data/sr/{drug_name}_final_features.npy'
-    run_pipeline(drug_name, source_dir, target_dir, save_feature_path)
+
+drug_name = 'Afatinib'  # Change drug name here: AR-42, Gefitinib, Sorafenib, Vorinostat, Docetaxel, Etoposide, PLX4720,
+source_dir = '/data/sr/New_Folder/Afatinib.csv'
+target_dir = '/data/sr/New_Folder/Target_expr_resp_z.Afatinib_tp4k.csv'
+save_feature_path = f'/data/sr/New_Folder/{drug_name}_final_features.npy'
+
 
 # ====================== Hyperparameter Configuration ===========================
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
@@ -21,21 +20,19 @@ BATCH_SIZE = 120
 EPOCHS = 100
 LEARNING_RATE = 8e-5
 WEIGHT_DECAY = 1e-5
-CLASS_NUM = 21  # Number of drug categories
+
 
 # ====================== Data Preprocessing Function ===========================
 def load_and_preprocess_data(drug_name, source_dir, target_dir):
-    # Auto path joining
-    source_path = os.path.join(source_dir, f'{drug_name}.csv')
-    target_path = os.path.join(target_dir, f'Target_expr_resp_z{drug_name}_tp4k.csv')
-
     # Read data
-    source_data = pd.read_csv(source_path)
-    target_data = pd.read_csv(target_path)
-
+    source_data = pd.read_csv(source_dir)
+    target_data = pd.read_csv(target_dir)
+    # Get all unique labels and sort
+    labels = sorted(source_data['label'].unique())
+    CLASS_NUM = len(labels)  # Number of unique labels
     # Extract source data
     x_source, r_source, l_source = [], [], []
-    for label in range(1, CLASS_NUM + 1):
+    for label in labels:
         temp_x = source_data[source_data['label'] == label].iloc[:, 5:].values
         temp_r = source_data[source_data['label'] == label].iloc[:, 1].values
         x_source.append(temp_x)
@@ -45,10 +42,11 @@ def load_and_preprocess_data(drug_name, source_dir, target_dir):
         l_source.append(one_hot)
 
     # Extract target data
-    x_target = target_data[target_data['label'] == CLASS_NUM].iloc[:, 3:].values
-    r_target = target_data[target_data['label'] == CLASS_NUM].iloc[:, 1].values
+    last_label = labels[-1]
+    x_target = target_data[target_data['label'] == last_label].iloc[:, 3:].values
+    r_target = target_data[target_data['label'] == last_label].iloc[:, 1].values
     one_hot_target = np.zeros((x_target.shape[0], CLASS_NUM))
-    one_hot_target[:, CLASS_NUM - 1] = 1
+    one_hot_target[:, last_label - 1] = 1
 
     # Standardization and NaN handling
     def standardize_and_fill(matrix):
@@ -80,10 +78,10 @@ def load_and_preprocess_data(drug_name, source_dir, target_dir):
                                batch_size=BATCH_SIZE, shuffle=False, drop_last=False)
 
     input_dim = x_source_tensor.shape[1]
-    return source_loader, target_loader, input_dim
+    return source_loader, target_loader, input_dim, CLASS_NUM
 
 # ====================== Training Function ===========================
-def train_model(source_loader, target_loader, input_dim):
+def train_model(source_loader, target_loader, input_dim, CLASS_NUM):
     # Initialize model
     model = Model(input_dim, 1024, 740, CLASS_NUM).to(device)
     optimizer = torch.optim.Adam(model.parameters(), lr=LEARNING_RATE, weight_decay=WEIGHT_DECAY)
@@ -155,12 +153,13 @@ def plot_results(train_losses, test_aucs, drug_name):
 # ====================== Main Pipeline ===========================
 def run_pipeline(drug_name, source_dir, target_dir, save_feature_path=None):
     # Data preparation
-    source_loader, target_loader, input_dim = load_and_preprocess_data(drug_name, source_dir, target_dir)
+    source_loader, target_loader, input_dim, CLASS_NUM = load_and_preprocess_data(drug_name, source_dir, target_dir)
     # Training
-    train_losses, test_aucs, features = train_model(source_loader, target_loader, input_dim)
+    train_losses, test_aucs, features = train_model(source_loader, target_loader, input_dim, CLASS_NUM)
     # Visualization
     plot_results(train_losses, test_aucs, drug_name)
     # Feature saving (optional)
     if save_feature_path:
         np.save(save_feature_path, features)
         print(f"Features saved to {save_feature_path}")
+run_pipeline(drug_name, source_dir, target_dir, None)
