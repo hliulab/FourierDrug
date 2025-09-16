@@ -3,100 +3,94 @@
 panCancerDR is a novel domain generalization framework designed to predict drug response in out-of-distribution samples, including individual cells and patient data, using only in vitro cancer cell line data for training. By leveraging adversarial domain generalization and innovative feature extraction techniques, panCancerDR addresses the limitations of traditional domain adaptation methods, which are unsuitable for unseen target domains.
 
 
-## **Prerequisites**
-
-Before running the code, ensure you have the following libraries installed:
-
-- **Python Libraries**:
-  - `pandas`: For data manipulation and preprocessing.
-  - `torch`: PyTorch framework for building and training models.
-  - `torchvision`: For additional PyTorch utilities (if required).
-  - `sklearn`: For data splitting, metrics, and other utilities.
-  - `tqdm`: For progress bar visualization.
-  - `numpy`: For numerical operations.
-  - `matplotlib`: For plotting and visualizing results.
-
-## Installation Guide
+## **1. 下载项目代码**
 
 ### Clone the Repository
+
+~~~bash
+git clone https://github.com/hliulab/FourierDrug.git
+cd FourierDrug
+~~~
+
+## **2. 解压数据集**
+
+~~~bash
+unzip dataset.zip
+~~~
+
+## 3. 创建运行环境
+
+项目提供了 `environment.yml` 文件，可以直接用 Conda 创建环境：
+
 ```bash
-git clone https://anonymous.4open.science/r/panCancerDR-FC03.git
+cd code
+conda env create -f environment.yml
 ```
 
-## Instructions for Use
+创建完成后，激活环境：
 
-## Cell Line Experiment Instructions
+```bash
+conda activate FourierDrug
+```
 
-To train the model on cell line experiments, follow these steps:  
+------
 
-1. **Download the code files**  
-   - `cell_line.py`  
-   - `model_test0.py`  
+## 4.1 Cell Line Experiment Instructions
 
-2. **Prepare the dataset**  
-   Download the corresponding cell line dataset into the `datasets/hold-out` folder.  
+运行以下命令来训练 **Cell Line Experiment**：
 
-3. **Configure the parameters**  
-   - Set `source_path` to the path of the cell line dataset.  
-   - Set `test_label` to the cancer type ID (usually a number from `0` to `22`).  
+```bash
+python cell_line.py --source_path ../datasets/hold-out/cell_Afatinib.csv
+```
 
-4. **Run the experiment**  
-   Execute the script to perform Leave-One-Out Cross Validation (LOOCV).
-## Single-Cell Experiment Instructions
+参数说明：
 
-To train the model on single-cell experiments, follow these steps:  
+- `--source_path`：指定输入数据文件路径。示例中使用的是 `../datasets/hold-out/cell_Afatinib.csv`，你也可以根据需要替换为 `hold-out` 文件夹中的其他数据集。
 
-1. **Download the code files**  
-   - `Single-cell.py`  
-   - `model_test0.py`  
-
-2. **Prepare the dataset**  
-   Download both the cell line and single-cell datasets from the `datasets/single-cell` folder.  
-
-3. **Configure the parameters**  
-   - In `Single-cell.py`, set `drug_name` to the drug you want to validate.  
-   - Set `source_dir` to the path of the corresponding **cell line dataset**.  
-   - Set `target_dir` to the path of the corresponding **single-cell dataset**.  
-
-4. **Run the experiment**  
-   Execute the script to perform single-cell validation.
-## Patient Experiment Instructions
-
-To train the model on patient data experiments, follow these steps:  
-
-1. **Download the code files**  
-   - `TCGA.py`  
-   - `model_test0.py`  
-
-2. **Prepare the dataset**  
-   Download both the cell line and patient datasets from the `datasets/patient` folder.  
-
-3. **Configure the parameters**  
-   - In `TCGA.py`, set `drug_name` to the drug you want to validate.  
-   - Set `source_dir` to the path of the corresponding **cell line dataset**.  
-   - Set `target_dir` to the path of the corresponding **patient dataset**.  
-
-4. **Run the experiment**  
-   Execute the script to perform patient data validation.
-## Time-Series Experiment Instructions
-
-To run time-series experiment validation, follow these steps:  
-
-1. **Download the code files**  
-   - `timeseq.py`  
-   - `model_test0.py`  
-
-2. **Prepare the dataset**  
-   Download the required data from the `datasets/dynamic` folder.  
-
-3. **Configure the parameters**  
-   - In `timeseq.py`, set `drug_name` to `'Bortezomib'`.  
-   - Set `source_dir` to the file path of **`Bortezomib_source1.csv`**.  
-   - Set `target_dir` to the file path of **`Bortezomib_target.csv`**.  
-
-4. **Run the experiment**  
-   Execute the script to perform time-series experiment validation.
+------
 
 
 
-Feel free to let me know if you need additional sections or customizations!
+------
+
+## 4.2 Single-Cell Experiment Instructions
+
+运行以下命令来训练 **Single-Cell Experiment**：
+
+```bash
+python Single-cell.py --drug_name Afatinib --source_dir ../datasets/single_cell/Afatinib.csv --target_dir ../datasets/single_cell/Target_expr_resp_z.Afatinib_tp4k.csv
+```
+
+参数说明：
+
+- `--drug_name`：指定药物名称（此处为 **Afatinib**）。
+- `--source_dir`：输入数据文件路径（此处为 `../datasets/single_cell/Afatinib.csv`）。
+- `--target_dir`：目标表达及反应数据文件路径（此处为 `../datasets/single_cell/Target_expr_resp_z.Afatinib_tp4k.csv`）。
+
+通过指定single_cell中的文件改变训练数据集。
+
+## 4.3 Patient Experiment Instructions
+
+运行以下命令来训练 **Patient Experiment**：
+
+```bash
+python TCGA.py --drug_name Afatinib --source_dir ../datasets/single_cell/Afatinib.csv --target_dir ../datasets/single_cell/Target_expr_resp_z.Afatinib_tp4k.csv
+```
+
+参数说明：
+
+- `--drug_name`：指定药物名称（此处为 **Afatinib**）。
+- `--source_dir`：输入数据文件路径（此处为 `../datasets/single_cell/Afatinib.csv`）。
+- `--target_dir`：目标表达及反应数据文件路径（此处为 `../datasets/single_cell/Target_expr_resp_z.Afatinib_tp4k.csv`）。
+
+------
+
+通过指定patient中的文件改变训练数据集。
+
+## 4.4 Time-Series Experiment Instructions
+
+运行以下命令来训练 **Time-Series Experiment**：
+
+```bash
+python timeseq.py
+```
