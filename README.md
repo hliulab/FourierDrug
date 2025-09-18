@@ -72,7 +72,7 @@ python TCGA.py --drug_name 5-Fluorouracil --source_dir ../datasets/patient/5-Flu
 
 Parameter description:
 
-* `--drug_name`: Specifies the drug name (here **Afatinib**).
+* `--drug_name`: Specifies the drug name (here **5-Fluorouracil**).
 * `--source_dir`: Path to the input data file (here `../datasets/patient/5-Fluorouracil_cell_lines.csv`).
 - `--target_dir`: Path to the expression profile and response data of testing file (here `../datasets/patient/5-Fluorouracil_patients.csv`).
 
