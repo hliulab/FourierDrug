@@ -29,7 +29,8 @@ conda activate FourierDrug
 ## 3. Unzip datasets
 Enter the datasets directory, and you will find five compressed files. Each corresponds to the experiments conducted in this study: the LOOV GDSC dataset (hold-out), single-cell drug sensitivity (single-cell), GCGA patient drug response (patient), drug response dynamics transition (dynamic), and the ablation experiment (ablation). You may extract the dataset of interest to proceed with the subsequent steps.
 ~~~bash
-unzip dataset.zip
+cd datasets
+unzip hold-out
 ~~~
 
 ## 4. Reprouduce Experiments
