@@ -1,16 +1,16 @@
 # Generalizing drug response prediction by Fourier asymmetric attention on domain generalization
 ![Screenshot](framework.png)
-panCancerDR is a novel domain generalization framework designed to predict drug response in out-of-distribution samples, including individual cells and patient data, using only in vitro cancer cell line data for training. By leveraging adversarial domain generalization and innovative feature extraction techniques, panCancerDR addresses the limitations of traditional domain adaptation methods, which are unsuitable for unseen target domains.
+FourierDrug is a novel domain generalization framework designed to predict drug response in out-of-distribution samples, including individual cells and patient data, using only in vitro cancer cell line data for training. By leveraging adversarial domain generalization and innovative feature extraction techniques, FourierDrug addresses the limitations of traditional domain adaptation methods, which are unsuitable for unseen target domains.
 
 
-## **1.  Clone Repository
+## 1.  Clone Repository
 
 ~~~bash
 git clone https://github.com/hliulab/FourierDrug.git
 cd FourierDrug
 ~~~
 
-## **2. Unzip datasets
+## 2. Unzip datasets
 Enter the datasets directory, and you will find five compressed files. Each corresponds to the experiments conducted in this study: the LOOV GDSC dataset (hold-out), single-cell drug sensitivity (single-cell), GCGA patient drug response (patient), drug response dynamics transition (dynamic), and the ablation experiment (ablation). You may extract the dataset of interest to proceed with the subsequent steps.
 ~~~bash
 unzip dataset.zip
