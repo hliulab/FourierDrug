@@ -1,5 +1,6 @@
 # Generalizing drug response prediction by Fourier asymmetric attention on domain generalization
 ![Screenshot](framework.png)
+
 FourierDrug is a novel domain generalization framework designed to predict drug response in out-of-distribution samples, including individual cells and patient data, using only in vitro cancer cell line data for training. By leveraging adversarial domain generalization and innovative feature extraction techniques, FourierDrug addresses the limitations of traditional domain adaptation methods, which are unsuitable for unseen target domains.
 
 
@@ -47,19 +48,19 @@ Parameter description:
 
 
 
-## 4.2 Single-Cell Experiment Instructions
+## 4.2 Single-cell drug response prediction
 
-运行以下命令来训练 **Single-Cell Experiment**：
+To train the FourierDrug model for a specific drug and apply the trained model to test drug response at the single-cell level, you can run the following command:
 
 ```bash
 python Single-cell.py --drug_name Afatinib --source_dir ../datasets/single_cell/Afatinib.csv --target_dir ../datasets/single_cell/Target_expr_resp_z.Afatinib_tp4k.csv
 ```
 
-参数说明：
+Parameter description:
 
-- `--drug_name`：指定药物名称（此处为 **Afatinib**）。
-- `--source_dir`：输入数据文件路径（此处为 `../datasets/single_cell/Afatinib.csv`）。
-- `--target_dir`：目标表达及反应数据文件路径（此处为 `../datasets/single_cell/Target_expr_resp_z.Afatinib_tp4k.csv`）。
+* `--drug_name`: Specifies the drug name (here **Afatinib**).
+* `--source_dir`: Path to the input data file (here `../datasets/single_cell/Afatinib.csv`).
+* `--target_dir`: Path to the target expression and response data file (here `../datasets/single_cell/Target_expr_resp_z.Afatinib_tp4k.csv`).
 
 通过指定single_cell中的文件改变训练数据集。
 
