@@ -8,7 +8,6 @@ FourierDrug is a novel domain generalization framework designed to predict drug 
 
 ~~~bash
 git clone https://github.com/hliulab/FourierDrug.git
-cd FourierDrug
 ~~~
 
 ## 2. Create Python environment
@@ -16,7 +15,7 @@ cd FourierDrug
 We provide an environment.yml file, which can be directly used to create the environment with Conda:
 
 ```bash
-cd code
+cd FourierDrug
 conda env create -f environment.yml
 ```
 
@@ -50,7 +49,7 @@ Parameter description:
 
 ## 4.2 Single-cell drug response prediction
 
-To train the FourierDrug model for a specific drug and apply the trained model to test drug response at the single-cell level, you can run the following command:
+To train the FourierDrug model for a specific drug based on GDSC dataset and then apply the trained model to predict single-cell drug response, you can run the following command:
 
 ```bash
 python Single-cell.py --drug_name Afatinib --source_dir ../datasets/single_cell/Afatinib.csv --target_dir ../datasets/single_cell/Target_expr_resp_z.Afatinib_tp4k.csv
@@ -59,14 +58,12 @@ python Single-cell.py --drug_name Afatinib --source_dir ../datasets/single_cell/
 Parameter description:
 
 * `--drug_name`: Specifies the drug name (here **Afatinib**).
-* `--source_dir`: Path to the input data file (here `../datasets/single_cell/Afatinib.csv`).
-* `--target_dir`: Path to the target expression and response data file (here `../datasets/single_cell/Target_expr_resp_z.Afatinib_tp4k.csv`).
+* `--source_dir`: Path to the input data file (here `../datasets/single-cell/Afatinib.csv`).
+* `--target_dir`: Path to the target expression and response data file (here `../datasets/single-cell/Target_expr_resp_z.Afatinib_tp4k.csv`).
 
-通过指定single_cell中的文件改变训练数据集。
 
-## 4.3 Patient Experiment Instructions
-
-运行以下命令来训练 **Patient Experiment**：
+## 4.3 Patient drug repsonse prediction
+To train the FourierDrug model for a specific drug based on GDSC dataset and then apply the trained model to predict clinical patient drug response, you can run the following command:
 
 ```bash
 python TCGA.py --drug_name Afatinib --source_dir ../datasets/single_cell/Afatinib.csv --target_dir ../datasets/single_cell/Target_expr_resp_z.Afatinib_tp4k.csv
