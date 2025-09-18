@@ -59,7 +59,7 @@ Parameter description:
 
 * `--drug_name`: Specifies the drug name (here **Afatinib**).
 * `--source_dir`: Path to the input data file (here `../datasets/single-cell/Afatinib.csv`).
-* `--target_dir`: Path to the target expression and response data file (here `../datasets/single-cell/Target_expr_resp_z.Afatinib_tp4k.csv`).
+* `--target_dir`: Path to the expression profile and response data of testing file (here `../datasets/single-cell/Target_expr_resp_z.Afatinib_tp4k.csv`).
 
 
 ## 4.3 Patient drug repsonse prediction
@@ -69,15 +69,13 @@ To train the FourierDrug model for a specific drug based on GDSC dataset and the
 python TCGA.py --drug_name Afatinib --source_dir ../datasets/patient/Afatinib.csv --target_dir ../datasets/patient/Target_expr_resp_z.Afatinib_tp4k.csv
 ```
 
-参数说明：
+Parameter description:
 
-- `--drug_name`：指定药物名称（此处为 **Afatinib**）。
-- `--source_dir`：输入数据文件路径（此处为 `../datasets/patient/Afatinib.csv`）。
-- `--target_dir`：目标表达及反应数据文件路径（此处为 `../datasets/patient/Target_expr_resp_z.Afatinib_tp4k.csv`）。
+* `--drug_name`: Specifies the drug name (here **Afatinib**).
+* `--source_dir`: Path to the input data file (here `../datasets/patient/Afatinib.csv`).
+- `--target_dir`: Path to the expression profile and response data of testing file (here `../datasets/patient/Target_expr_resp_z.Afatinib_tp4k.csv`).
 
-------
 
-通过指定patient中的文件改变训练数据集。
 
 ## 4.4 Time-Series Experiment Instructions
 
