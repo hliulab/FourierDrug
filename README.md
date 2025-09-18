@@ -52,7 +52,7 @@ Parameter description:
 To train the FourierDrug model for a specific drug based on GDSC dataset and then apply the trained model to predict single-cell drug response, you can run the following command:
 
 ```bash
-python Single-cell.py --drug_name Afatinib --source_dir ../datasets/single_cell/Afatinib.csv --target_dir ../datasets/single_cell/Target_expr_resp_z.Afatinib_tp4k.csv
+python Single-cell.py --drug_name Afatinib --source_dir ../datasets/single-cell/Afatinib.csv --target_dir ../datasets/single-cell/Target_expr_resp_z.Afatinib_tp4k.csv
 ```
 
 Parameter description:
@@ -66,14 +66,14 @@ Parameter description:
 To train the FourierDrug model for a specific drug based on GDSC dataset and then apply the trained model to predict clinical patient drug response, you can run the following command:
 
 ```bash
-python TCGA.py --drug_name Afatinib --source_dir ../datasets/single_cell/Afatinib.csv --target_dir ../datasets/single_cell/Target_expr_resp_z.Afatinib_tp4k.csv
+python TCGA.py --drug_name Afatinib --source_dir ../datasets/patient/Afatinib.csv --target_dir ../datasets/patient/Target_expr_resp_z.Afatinib_tp4k.csv
 ```
 
 参数说明：
 
 - `--drug_name`：指定药物名称（此处为 **Afatinib**）。
-- `--source_dir`：输入数据文件路径（此处为 `../datasets/single_cell/Afatinib.csv`）。
-- `--target_dir`：目标表达及反应数据文件路径（此处为 `../datasets/single_cell/Target_expr_resp_z.Afatinib_tp4k.csv`）。
+- `--source_dir`：输入数据文件路径（此处为 `../datasets/patient/Afatinib.csv`）。
+- `--target_dir`：目标表达及反应数据文件路径（此处为 `../datasets/patient/Target_expr_resp_z.Afatinib_tp4k.csv`）。
 
 ------
 
