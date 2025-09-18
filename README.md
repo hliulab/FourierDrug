@@ -67,15 +67,14 @@ Parameter description:
 To train the FourierDrug model for a specific drug based on GDSC dataset and then apply the trained model to predict clinical patient drug response, you can run the following command:
 
 ```bash
-python TCGA.py --drug_name Afatinib --source_dir ../datasets/patient/Afatinib.csv --target_dir ../datasets/patient/Target_expr_resp_z.Afatinib_tp4k.csv
+python TCGA.py --drug_name 5-Fluorouracil --source_dir ../datasets/patient/5-Fluorouracil_cell_lines.csv --target_dir ../datasets/patient/5-Fluorouracil_patients.csv
 ```
 
 Parameter description:
 
 * `--drug_name`: Specifies the drug name (here **Afatinib**).
-* `--source_dir`: Path to the input data file (here `../datasets/patient/Afatinib.csv`).
-- `--target_dir`: Path to the expression profile and response data of testing file (here `../datasets/patient/Target_expr_resp_z.Afatinib_tp4k.csv`).
-
+* `--source_dir`: Path to the input data file (here `../datasets/patient/5-Fluorouracil_cell_lines.csv`).
+- `--target_dir`: Path to the expression profile and response data of testing file (here `../datasets/patient/5-Fluorouracil_patients.csv`).
 
 
 ## 4.4 Time-Series Experiment Instructions
