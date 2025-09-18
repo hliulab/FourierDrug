@@ -27,7 +27,7 @@ conda activate FourierDrug
 
 
 ## 3. Unzip datasets
-Enter the datasets directory, and you will find five compressed files. Each corresponds to the experiments conducted in this study: the LOOV GDSC dataset (hold-out), single-cell drug sensitivity (single-cell), GCGA patient drug response (patient), drug response dynamics transition (dynamic), and the ablation experiment (ablation). You may extract the dataset of interest (e.g. hold-out) to proceed with the subsequent steps using the command:
+Enter the datasets directory, and you will find five compressed files. Each corresponds to the four experiments conducted in this study: the LOOV GDSC dataset (hold-out), single-cell drug sensitivity (single-cell), GCGA patient drug response (patient), drug response dynamics transition (dynamic). You may extract the dataset of interest (e.g. hold-out) to proceed with the subsequent steps using the command:
 ~~~bash
 cd datasets
 unzip hold-out
@@ -48,7 +48,7 @@ Parameter description:
 
 
 
-## 4.2 Single-cell drug response prediction
+## 4.2 Predicting single-cell drug response 
 
 To train the FourierDrug model for a specific drug based on GDSC dataset and then apply the trained model to predict single-cell drug response, you can run the following command:
 
@@ -63,7 +63,7 @@ Parameter description:
 * `--target_dir`: Path to the expression profile and response data of testing file (here `../datasets/single-cell/Target_expr_resp_z.Afatinib_tp4k.csv`).
 
 
-## 4.3 Patient drug repsonse prediction
+## 4.3 Predicting patient drug repsonse 
 To train the FourierDrug model for a specific drug based on GDSC dataset and then apply the trained model to predict clinical patient drug response, you can run the following command:
 
 ```bash
@@ -77,10 +77,15 @@ Parameter description:
 - `--target_dir`: Path to the expression profile and response data of testing file (here `../datasets/patient/5-Fluorouracil_patients.csv`).
 
 
-## 4.4 Time-Series Experiment Instructions
+## 4.4 Predicting single-cell dynamic transition toward drug resistance
 
-运行以下命令来训练 **Time-Series Experiment**：
+Run the following command to train the model for the drug Bortezomib based on GDSC dataset, and apply it to predict the transition of single cells toward a drug-resistant state under continuous drug exposure.
 
 ```bash
-python timeseq.py
+python timeseq.py --source_path ../datasets/dynamic/Bortezomib_source1.csv --target_dir ../datasets/dynamic/Bortezomib_target.csv
 ```
+
+## Support
+For further assistance, bug reports, or to request new features, please contact us at hliu@njtech.edu.cn or open an issue on the [GitHub repository page](https://github.com/hliulab/FourierDrug).
+
+---
