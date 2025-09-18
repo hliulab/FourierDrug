@@ -3,31 +3,29 @@
 panCancerDR is a novel domain generalization framework designed to predict drug response in out-of-distribution samples, including individual cells and patient data, using only in vitro cancer cell line data for training. By leveraging adversarial domain generalization and innovative feature extraction techniques, panCancerDR addresses the limitations of traditional domain adaptation methods, which are unsuitable for unseen target domains.
 
 
-## **1. 下载项目代码**
-
-### Clone the Repository
+## **1.  Clone Repository
 
 ~~~bash
 git clone https://github.com/hliulab/FourierDrug.git
 cd FourierDrug
 ~~~
 
-## **2. 解压数据集**
-
+## **2. Unzip datasets
+Enter the datasets directory, and you will find five compressed files. Each corresponds to the experiments conducted in this study: the LOOV GDSC dataset (hold-out), single-cell drug sensitivity (single-cell), GCGA patient drug response (patient), drug response dynamics transition (dynamic), and the ablation experiment (ablation). You may extract the dataset of interest to proceed with the subsequent steps.
 ~~~bash
 unzip dataset.zip
 ~~~
 
-## 3. 创建运行环境
+## 3. Create Python environment
 
-项目提供了 `environment.yml` 文件，可以直接用 Conda 创建环境：
+We provide an environment.yml file, which can be directly used to create the environment with Conda:
 
 ```bash
 cd code
 conda env create -f environment.yml
 ```
 
-创建完成后，激活环境：
+After the environment is created, activate it:
 
 ```bash
 conda activate FourierDrug
@@ -35,18 +33,18 @@ conda activate FourierDrug
 
 ------
 
-## 4.1 Cell Line Experiment Instructions
+## 4 Reprouduce Experiments
+### 4.1 Validation on hold-out cancer types 
 
-运行以下命令来训练 **Cell Line Experiment**：
+This experiment performs validation on the GDSC cell line drug response dataset, where all cell lines from one cancer type are held out as the test set in each fold, and the remaining data are used for training. Run the following command to train the FourierDrug model for a specific drug of interest and then perform testing:
 
 ```bash
 python cell_line.py --source_path ../datasets/hold-out/cell_Afatinib.csv
 ```
 
-参数说明：
+Parameter description:
 
-- `--source_path`：指定输入数据文件路径。示例中使用的是 `../datasets/hold-out/cell_Afatinib.csv`，你也可以根据需要替换为 `hold-out` 文件夹中的其他数据集。
-
+- `--source_path`: Specifies the path of input data file. This example specify the path `../datasets/hold-out/cell_Afatinib.csv`, and you may replace it with other datasets in the `hold-out` folder as needed.
 ------
 
 
